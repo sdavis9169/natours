@@ -1,0 +1,23 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning node,  express, and mongo",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdavis9169/natours.git"
+  },
+  "author": "Steven Davis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdavis9169/natours/issues"
+  },
+  "homepage": "https://github.com/sdavis9169/natours#readme"
+}
