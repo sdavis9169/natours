@@ -4,6 +4,7 @@
   "description": "Learning node,  express, and mongo",
   "main": "app.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.1.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
