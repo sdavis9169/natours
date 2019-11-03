@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const User = require('./userModel');
 // const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
@@ -79,6 +80,7 @@ const tourSchema = new mongoose.Schema(
       default: false
     },
     startLocation: {
+      //GeoJSON
       type: {
         type: String,
         default: 'Point',
@@ -100,6 +102,12 @@ const tourSchema = new mongoose.Schema(
         description: String,
         day: Number
       }
+    ],
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+      }
     ]
   },
   {
@@ -118,6 +126,12 @@ tourSchema.pre('save', function(next) {
   next();
 });
 
+// tourSchema.pre('save', async function(next) {
+//   const guidePromises = this.guides.map(async id => await User.findById(id));
+//   this.guides = await Promise.all(guidePromises);
+//   next();
+// });
+
 // tourSchema.post('save', function(doc, next) {
 //   console.log(doc);
 //   next();
@@ -131,6 +145,15 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
+
+  next();
+});
+
 tourSchema.post(/^find/, function(docs, next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds`);
   next();
@@ -138,7 +161,7 @@ tourSchema.post(/^find/, function(docs, next) {
 
 //AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function(next) {
-  this.pipeline().unshift({ $match: { secretTour: { $n3: true } } });
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
   // console.log(this.pipeline());
   next();
