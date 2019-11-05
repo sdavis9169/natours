@@ -16,6 +16,12 @@ const reviewSchema = new mongoose.Schema({
   }
 });
 
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'tour'
+  });
+});
+
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
